@@ -26,6 +26,12 @@ public class Grid {
                 nodes.get(i).add(new Node(i,j));
             }
         }
+        for(int i=0;i<=totalColumn;i++){
+            findNode(i,0).status=1;
+            findNode(i,1).status=1;
+            findNode(i,4).status=2;
+            findNode(i,5).status=2;
+        }
     }
 
     /**
@@ -63,6 +69,17 @@ public class Grid {
                 return nodes.get(column).get(row);
         }
     }
+
+    public Boolean checkGameStatus(){
+       for(int i=0;i<=totalColumn;i++){
+           for(int j=0;j<=totalRow;j++){
+               if(findNode(i,j).status!=0){
+                   return false;
+               }
+           }
+       }
+       return true;
+    }
     public Node mirrowNode(Node thisNode, int mode){
         return mirrowNode(thisNode.column, thisNode.row, mode);
     }
@@ -80,7 +97,7 @@ public class Grid {
         ArrayList<Node> captureMove = new ArrayList<Node>();
         ArrayList<Node> protectedMove = new ArrayList<Node>();
         ArrayList<ArrayList<Node>> result = new ArrayList<ArrayList<Node>>();
-        HashMap<Node,Integer> visited = new HashMap<Node,Integer>();//if a node has been checked
+        HashMap<Integer,Integer> visited = new HashMap<Integer,Integer>();//if a node has been checked
 
         //check if the node is on a chain, a node may appear on multiple chains
         for(ArrayList<Node> thisRail:railways){
@@ -95,13 +112,14 @@ public class Grid {
                             j = (j + 1) % railway.size();
                             while (visited.get(j) == null && railway.get(j).status == 0) {
                                 normalMove.add(railway.get(j));
+                                visited.put(j,1);
                                 j = (j + 1) % railway.size();
                             }
                             if (visited.get(j) != null) {
 
                             } else if (railway.get(j).status == thisNode.status && !railway.get(j).equals(thisNode)) {
                                 protectedMove.add(railway.get(j));
-                            } else if (railway.get(j).status != thisNode.status) {
+                            } else if (railway.get(j).status != thisNode.status && railway.get(j).status!=0) {
                                 captureMove.add(railway.get(j));
                             }
                             //get approachable nodes counterclockwise, a single node is checked once maximum
@@ -109,13 +127,14 @@ public class Grid {
                             j = j==0?railway.size()-1:(j - 1);
                             while (visited.get(j) == null && railway.get(j).status == 0) {
                                 normalMove.add(railway.get(j));
+                                visited.put(j,1);
                                 j = j==0?railway.size()-1:(j - 1);
                             }
                             if (visited.get(j) != null) {
 
                             } else if (railway.get(j).status == thisNode.status && !railway.get(j).equals(thisNode)) {
                                 protectedMove.add(railway.get(j));
-                            } else if (railway.get(j).status != thisNode.status) {
+                            } else if (railway.get(j).status != thisNode.status && railway.get(j).status!=0) {
                                 captureMove.add(railway.get(j));
                             }
                         }
@@ -129,12 +148,14 @@ public class Grid {
         for(Offset thisOffset:DIRECTIONS8){
             if(isLegalPosition(thisNode.column+thisOffset.x,thisNode.row+thisOffset.y)){
                 Node newNode = findNode(thisNode.column+thisOffset.x,thisNode.row+thisOffset.y);
-                if(newNode.status==0 && visited.get(newNode) == null) {
-                    normalMove.add(newNode);
-                }else if(newNode.status==thisNode.status && visited.get(newNode) == null) {
-                    protectedMove.add(newNode);
-                }else {
-                    captureMove.add(newNode);
+                if(visited.get(newNode)==null){
+                    if(newNode.status==0) {
+                        normalMove.add(newNode);
+                    }else if(newNode.status==thisNode.status){
+                        protectedMove.add(newNode);
+                    }else {
+                        captureMove.add(newNode);
+                    }
                 }
             }
         }
@@ -163,6 +184,7 @@ public class Grid {
             }
         }
     }
+
 
     /**
      *

@@ -79,10 +79,12 @@ public class ExamplePlayer extends GamePlayer{
                     moves.get(2).add(nodeStatus.get(i).get(j));//can not capture,not protected,normal move
                 }else if(nodeStatus.get(i).get(j).IsProtected && nodeStatus.get(i).get(j).status==0){
                     moves.get(3).add(nodeStatus.get(i).get(j));//can not capture,is protected,bad move
+                }else{
+
                 }
             }
         }
-
+/*
         Gd.clearAllHighlight();
         String[] colors = new String[]{"blue","green","yellow","red"};
         for(int i=0;i<=4;i++){
@@ -91,27 +93,28 @@ public class ExamplePlayer extends GamePlayer{
             }
         }
         Gd.printGrid();
-
+*/
         for(int i=0;i<moves.size();i++){
             for(Node thisNode:moves.get(i)){
                 if(thisNode.status!=side){
+
                     Node newNode = new Node(thisNode.column, thisNode.row);
                     newNode.status = -1;
                     newNode.railwayID = thisNode.railwayID;
                     ArrayList<ArrayList<Node>> possibleStart = gameGrid.getAvalablePath(newNode);
-                    Collections.shuffle(possibleStart);
+                    Collections.shuffle(possibleStart.get(1));
+                    ArrayList<Node> possibleNodes = new ArrayList<Node>();
                     for(Node startNode: possibleStart.get(1)){
-                        ArrayList<Node> possibleNodes = new ArrayList<Node>();
                         if(startNode.status == side){
                             possibleNodes.add(startNode);
                         }
-                        if(!possibleNodes.isEmpty()){
-                            startNode = possibleNodes.get((int) (possibleNodes.size()*rand.nextDouble()));
-                            if(gameGrid.moveChess(gameGrid.findNode(startNode.column,startNode.row),gameGrid.findNode(thisNode.column,thisNode.row))){
-                                return true;
-                            }else{
-                                return false;
-                            }
+                    }
+                    if(!possibleNodes.isEmpty()){
+                        Node startNode = possibleNodes.get((int) (possibleNodes.size()*rand.nextDouble()));
+                        if(gameGrid.moveChess(gameGrid.findNode(startNode.column,startNode.row),gameGrid.findNode(thisNode.column,thisNode.row))){
+                            return true;
+                        }else{
+                            return false;
                         }
                     }
                 }
