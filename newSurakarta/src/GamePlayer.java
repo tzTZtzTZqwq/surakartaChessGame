@@ -4,6 +4,7 @@ import java.util.Vector;
 public class GamePlayer {
     Grid gameGrid;
     String name;
+
     int side;
     GamePlayer(Grid gameGrid,String name,int side){
         this.gameGrid = gameGrid;

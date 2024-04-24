@@ -1,7 +1,6 @@
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Random;
-import java.util.Vector;
 
 public class ExamplePlayer extends GamePlayer{
     GridDrawer Gd = new GridDrawer(gameGrid);
@@ -51,7 +50,7 @@ public class ExamplePlayer extends GamePlayer{
         for(int i=0;i<=gameGrid.totalColumn;i++){
             for(int j=0;j<=gameGrid.totalRow;j++){
                 if(gameGrid.findNode(i,j).status != side && gameGrid.findNode(i,j).status != 0){
-                    res = gameGrid.getAvalablePath(gameGrid.findNode(i,j));
+                    res = gameGrid.getAvailablePath(gameGrid.findNode(i,j));
                     for(Node thisNode:res.get(2)){
                         nodeStatus.get(thisNode.column).get(thisNode.row).IsProtected = true;
                     }
@@ -101,7 +100,7 @@ public class ExamplePlayer extends GamePlayer{
                     Node newNode = new Node(thisNode.column, thisNode.row);
                     newNode.status = -1;
                     newNode.railwayID = thisNode.railwayID;
-                    ArrayList<ArrayList<Node>> possibleStart = gameGrid.getAvalablePath(newNode);
+                    ArrayList<ArrayList<Node>> possibleStart = gameGrid.getAvailablePath(newNode);
                     Collections.shuffle(possibleStart.get(1));
                     ArrayList<Node> possibleNodes = new ArrayList<Node>();
                     for(Node startNode: possibleStart.get(1)){

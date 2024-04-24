@@ -21,7 +21,7 @@ public class ExamplePlayer2 extends GamePlayer{
         Collections.shuffle(myNode);
 
         for(Node thisNode:myNode){
-            ArrayList<ArrayList<Node>> AllPossibleEnd = gameGrid.getAvalablePath(thisNode);
+            ArrayList<ArrayList<Node>> AllPossibleEnd = gameGrid.getAvailablePath(thisNode);
             ArrayList<Node> possibleEnds = new ArrayList<>();
             //possibleEnds.addAll(AllPossibleEnd.get(0));
             possibleEnds.addAll(AllPossibleEnd.get(1));
@@ -33,7 +33,7 @@ public class ExamplePlayer2 extends GamePlayer{
         }
 
         for(Node thisNode:myNode){
-            ArrayList<ArrayList<Node>> AllPossibleEnd = gameGrid.getAvalablePath(thisNode);
+            ArrayList<ArrayList<Node>> AllPossibleEnd = gameGrid.getAvailablePath(thisNode);
             ArrayList<Node> possibleEnds = new ArrayList<>();
             //possibleEnds.addAll(AllPossibleEnd.get(0));
             possibleEnds.addAll(AllPossibleEnd.get(0));
