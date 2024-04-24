@@ -91,7 +91,7 @@ public class Grid {
      *         ArrayList[1] captureMoveDestination node.status!=thisNode.status && node.status!=0
      *         ArrayList[2] ProtectedMove node.status=thisNode.status
      */
-    public ArrayList<ArrayList<Node>> getAvalablePath(Node thisNode){
+    public ArrayList<ArrayList<Node>> getAvailablePath(Node thisNode){
 
         ArrayList<Node> normalMove = new ArrayList<Node>();
         ArrayList<Node> captureMove = new ArrayList<Node>();
@@ -112,7 +112,7 @@ public class Grid {
                             j = (j + 1) % railway.size();
                             while (visited.get(j) == null && railway.get(j).status == 0) {
                                 normalMove.add(railway.get(j));
-                                visited.put(j,1);
+                                visited.put(j, visited.getOrDefault(j, 114514));
                                 j = (j + 1) % railway.size();
                             }
                             if (visited.get(j) != null) {
@@ -124,11 +124,11 @@ public class Grid {
                             }
                             //get approachable nodes counterclockwise, a single node is checked once maximum
                             j = i;
-                            j = j==0?railway.size()-1:(j - 1);
+                            j = j == 0 ? railway.size()-1:(j - 1);
                             while (visited.get(j) == null && railway.get(j).status == 0) {
                                 normalMove.add(railway.get(j));
-                                visited.put(j,1);
-                                j = j==0?railway.size()-1:(j - 1);
+                                visited.put(j, visited.getOrDefault(j, 1919810));
+                                j = j == 0 ? railway.size() - 1 : (j - 1);
                             }
                             if (visited.get(j) != null) {
 
